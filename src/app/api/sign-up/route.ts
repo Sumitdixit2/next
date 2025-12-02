@@ -26,6 +26,9 @@ export async function POST(request: NextRequest) {
 
     const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
 
+    console.log(verifyCode);
+    console.log(typeof verifyCode);
+
     if (existingUserVerifiedByEmail) {
       if (existingUserVerifiedByEmail.isVerified) {
         return Response.json(
@@ -54,7 +57,7 @@ export async function POST(request: NextRequest) {
         username,
         email,
         password: hashedPassword,
-        verifyCode,
+        verifyCode: verifyCode,
         verifyCodeExpiry: expiryDate,
         isVerified: false,
         isAcceptingMessage: true,
@@ -87,8 +90,8 @@ export async function POST(request: NextRequest) {
       },
       { status: 201 }
     );
-  } catch (error) {
-    console.error("Error while registering user", error);
+  } catch (error: any) {
+    console.log("Error while registering user", error.message);
     return Response.json(
       {
         success: false,
