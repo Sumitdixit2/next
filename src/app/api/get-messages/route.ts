@@ -4,7 +4,6 @@ import dbConnect from "@/src/lib/dbConnect";
 import User from "@/src/model/User.model";
 import { User as Usern } from "next-auth";
 import mongoose from "mongoose";
-import { success } from "zod";
 
 export async function GET(request: Request) {
   await dbConnect();
