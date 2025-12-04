@@ -3,9 +3,9 @@ import User from "@/src/model/User.model";
 import { verifySchema } from "@/src/schemas/verifySchema";
 import z, { flattenError, success } from "zod";
 
-const verifyCodeQuerySchema = z.object({
-  verifyCode: verifySchema,
-});
+// const verifyCodeQuerySchema = z.object({
+//   verifyCode: verifySchema,
+// });
 
 export async function POST(request: Request) {
   await dbConnect();
@@ -62,9 +62,6 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-
-    Usern.isVerified = true;
-    await Usern.save();
 
     return Response.json(
       {
