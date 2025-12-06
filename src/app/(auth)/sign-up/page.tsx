@@ -1,7 +1,7 @@
 "use client";
 import * as z from "zod";
 import Link from "next/link";
-import { SubmitHandler, useForm } from "react-hook-form";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useDebounceCallback } from "usehooks-ts";
@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Loader, Loader2 } from "lucide-react";
+import { useForm } from "react-hook-form";
 
 function page() {
   const [username, setUsername] = useState<string>("");
@@ -48,7 +49,7 @@ function page() {
       }
       try {
         const response = await axios.get(
-          `/api/check-username-unique?username=${debouncedUsername}`
+          `/api/check-username-unique?username=${username}`
         );
         console.log(response);
         setUsernameMessage(response.data.message);
@@ -70,7 +71,7 @@ function page() {
     setIsSubmitting(true);
     try {
       console.log(data);
-      const response = await axios.post<ApiResponse>("/api/sign-up", data);
+      await axios.post<ApiResponse>("/api/sign-up", data);
       toast.success("Signed Up Successfully");
 
       router.replace(`/verify/${username}`);
@@ -115,6 +116,12 @@ function page() {
               )}
             />
 
+            <p
+              className={`text-sm ${usernameMessage === "Username is available" ? "text-green-500" : "text-red-500"} `}
+            >
+              {usernameMessage}
+            </p>
+
             <FormField
               control={form.control}
               name="email"
@@ -139,11 +146,7 @@ function page() {
                     <Input type="password" placeholder="password" {...field} />
                   </FormControl>
                   {isCheckingUsername && <Loader2 className="animate-spin" />}
-                  <p
-                    className={`text-sm ${usernameMessage === "Username is available" ? "text-green-500" : "text-red-500"} `}
-                  >
-                    test {usernameMessage}
-                  </p>
+
                   <FormMessage />
                 </FormItem>
               )}
