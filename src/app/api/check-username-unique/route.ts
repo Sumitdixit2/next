@@ -1,8 +1,7 @@
 import dbConnect from "@/src/lib/dbConnect";
 import User from "@/src/model/User.model";
-import z, { flattenError, success } from "zod";
+import z, { flattenError } from "zod";
 import { usernameValidation } from "@/src/schemas/signUpSchema";
-import { NextRequest } from "next/server";
 
 const UsernameQuerySchema = z.object({
   username: usernameValidation,
