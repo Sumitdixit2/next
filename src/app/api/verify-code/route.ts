@@ -10,23 +10,7 @@ import z, { flattenError, success } from "zod";
 export async function POST(request: Request) {
   await dbConnect();
   try {
-    const { username, verifyCode } = await request.json();
-    // const result = verifyCodeQuerySchema.safeParse(verifyCode);
-
-    // if (!result.success) {
-    //   const flattened = flattenError(result.error);
-    //   const CodeErrors = flattened.fieldErrors?.verifyCode || [];
-    //   return Response.json(
-    //     {
-    //       success: false,
-    //       message:
-    //         CodeErrors?.length > 0
-    //           ? CodeErrors.join(", ")
-    //           : "Invalid query parameters",
-    //     },
-    //     { status: 400 }
-    //   );
-    // }
+    const { username, Code } = await request.json();
 
     const Usern = await User.findOne({ username });
 
@@ -40,7 +24,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const isCodeCorrect = Usern.verifyCode === verifyCode;
+    const isCodeCorrect = Usern.verifyCode === Code;
     const isCodeNotExpired = new Date(Usern.verifyCodeExpiry) > new Date();
 
     if (!isCodeCorrect) {

@@ -116,11 +116,15 @@ function page() {
               )}
             />
 
-            <p
-              className={`text-sm ${usernameMessage === "Username is available" ? "text-green-500" : "text-red-500"} `}
-            >
-              {usernameMessage}
-            </p>
+            {username !== "" ? (
+              <p
+                className={`text-sm ${usernameMessage === "Username is available" ? "text-green-500" : "text-red-500"} `}
+              >
+                {usernameMessage}
+              </p>
+            ) : (
+              ""
+            )}
 
             <FormField
               control={form.control}

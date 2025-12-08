@@ -9,16 +9,20 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       id: "credentials",
       name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
+      },
       async authorize(credentials: any): Promise<any> {
         await dbConnect();
         try {
           const user = await User.findOne({
             $or: [
               {
-                email: credentials.identifier.email,
+                email: credentials.identifier,
               },
               {
-                username: credentials.identifier.username,
+                username: credentials.identifier,
               },
             ],
           });
@@ -44,18 +48,6 @@ export const authOptions: NextAuthOptions = {
         } catch (err: any) {
           throw new Error(err);
         }
-      },
-      credentials: {
-        email: {
-          label: "Email",
-          type: "text",
-          placeholder: "Enter your email",
-        },
-        password: {
-          label: "Password",
-          type: "password",
-          placeholder: "Enter your password",
-        },
       },
     }),
   ],
