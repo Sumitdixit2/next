@@ -29,7 +29,7 @@ function page() {
     try {
       const response = await axios.post(`/api/verify-code`, {
         username: params.username,
-        code: data.code,
+        Code: data.Code,
       });
 
       toast.success(`${response.data.message}`);
@@ -53,7 +53,7 @@ function page() {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
-              name="code"
+              name="Code"
               control={form.control}
               render={({ field }) => (
                 <FormItem>

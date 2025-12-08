@@ -47,6 +47,9 @@ export async function POST(request: Request) {
       );
     }
 
+    Usern.isVerified = true;
+    await Usern.save();
+
     return Response.json(
       {
         success: true,
