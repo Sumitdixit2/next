@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 import dbConnect from "@/src/lib/dbConnect";
 import User from "@/src/model/User.model";
+import { ApiResponse } from "@/src/types/ApiResponse";
 
 export const authOptions: NextAuthOptions = {
   providers: [

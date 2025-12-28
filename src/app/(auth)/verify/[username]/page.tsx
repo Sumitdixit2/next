@@ -33,7 +33,7 @@ function page() {
       });
 
       toast.success(`${response.data.message}`);
-      router.replace("sign-in");
+      router.replace("/sign-in");
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
       console.error("Error while fething checkUsername Api : ", axiosError);

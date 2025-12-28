@@ -4,11 +4,18 @@ import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "./ui/button";
 import { User } from "next-auth";
+import { toast } from "sonner";
 
 function Navbar() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+
+  if (status === "unauthenticated") {
+    console.log("user not logged in");
+    toast.error("user not authenticated!");
+  }
+
   if (!session) {
-    return;
+    toast.error("session is null or undefined");
   }
 
   const user: User = session?.user as User;
@@ -21,7 +28,7 @@ function Navbar() {
         </a>
         {session ? (
           <>
-            <span className="mr-4">Welcome, {user.username || user.email}</span>
+            <span className="mr-4">Welcome, {user.username}</span>
             <Button
               onClick={() => signOut()}
               className="w-full md:w-auto bg-slate-100 text-black"
